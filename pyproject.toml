@@ -1,0 +1,72 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+
+[project]
+version = "0.1"
+name = "lona-picocss"
+description = "Pico.css bindings for Lona"
+
+authors = [
+  { name="Florian Scherf", email="mail@florianscherf.de" },
+]
+
+license = { file="LICENSE.txt" }
+readme = "README.md"
+
+classifiers = [
+  "Development Status :: 4 - Beta",
+#  "Development Status :: 5 - Production/Stable",
+  "License :: OSI Approved :: MIT License",
+  "Natural Language :: English",
+  "Programming Language :: Python :: 3 :: Only",
+  "Topic :: Internet :: WWW/HTTP",
+  "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
+]
+
+requires-python = ">=3.7"
+
+dependencies = [
+  "lona>=1.12.1",
+]
+
+
+[project.optional-dependencies]
+packaging = [
+  "build",
+  "twine",
+]
+
+testing = [
+  "tox",
+  "coverage==7.1.0",
+  "pytest==7.2.1",
+  "pytest-aiohttp==1.0.4",
+  "playwright==1.30.0",
+]
+
+
+[project.urls]
+"Homepage" = "https://github.com/lona-web-org/lona-picocss"
+"Repository" = "https://github.com/lona-web-org/lona-picocss"
+"Bug Tracker" = "https://github.com/lona-web-org/lona-picocss/issues"
+
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+include = ["lona_picocss*"]
+
+[tool.setuptools.package-data]
+"lona_picocss.static" = ["**"]
+"lona_picocss.templates" = ["**"]
+
+[tool.setuptools.exclude-package-data]
+"*" = [
+  ".*",
+  "~*",
+  "*.swp",
+  "*.pyc",
+]

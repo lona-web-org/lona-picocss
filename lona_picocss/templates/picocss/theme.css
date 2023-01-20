@@ -1,0 +1,62 @@
+body {
+    padding: 0 var(--spacing);
+}
+
+#brand {
+    color: inherit !important;
+    background: inherit !important;
+}
+
+#brand img {
+    height: calc(var(--font-size) * 2);
+}
+
+main#lona-main {
+    min-height: 75%;
+}
+
+footer#lona-footer {
+    min-height: 4em;
+}
+
+{# color theme #}
+{# based on https://github.com/picocss/pico/blob/45e4a588435ce5977e23a8f9034542d7a8d76922/docs/js/src/color-picker.js#L112 #}
+[data-theme="generated"] {
+    --h4-color: {{ theme_data['color_scheme']['700'] }};
+    --primary: {{ theme_data['color_scheme']['600'] }};
+    --primary-hover: {{ theme_data['color_scheme']['700'] }};
+    --primary-focus: {{ hex_to_rgba(theme_data['color_scheme']['600'], 0.125) }};
+    --primary-inverse: {{ theme_data['color_scheme']['inverse'] }};
+    --form-element-active-border-color: var(--primary);
+    --form-element-focus-color: var(--primary-focus);
+    --switch-color: var(--primary-inverse);
+    --switch-checked-background-color: var(--primary);
+}
+
+@media only screen and (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) [data-theme="generated"] {
+        --h4-color: {{ theme_data['color_scheme']['400'] }};
+        --primary: {{ theme_data['color_scheme']['600'] }};
+        --primary-hover: {{ theme_data['color_scheme']['500'] }};
+        --primary-focus: {{ hex_to_rgba(theme_data['color_scheme']['600'], 0.25) }};
+        --primary-inverse: {{ theme_data['color_scheme']['inverse'] }};
+    }
+}
+
+[data-theme="dark"] {
+    --h4-color: {{ theme_data['color_scheme']['500'] }};
+    --primary: {{ theme_data['color_scheme']['600'] }};
+    --primary-hover: {{ theme_data['color_scheme']['500'] }};
+    --primary-focus: {{ hex_to_rgba(theme_data['color_scheme']['600'], 0.25) }};
+    --primary-inverse: {{ theme_data['color_scheme']['inverse'] }};
+}
+
+{# variables #}
+[data-theme="dark"],
+[data-theme="light"] {
+    {% for key, value in theme_data['css_variables'].items() %}
+        {% if value %}
+            --{{ key }}: {{ value }};
+        {% endif %}
+    {% endfor %}
+}

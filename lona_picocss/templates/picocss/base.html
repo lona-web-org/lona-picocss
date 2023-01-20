@@ -1,0 +1,83 @@
+{% set get_theme_data = Lona.import('lona_picocss.themes.get_theme_data') %}
+{% set hex_to_rgba = Lona.import('lona_picocss.themes.hex_to_rgba') %}
+{% set theme_data = get_theme_data(Lona) %}
+<html data-theme="{{ theme_data.theme_settings.theme }}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        {{ Lona.load_stylesheets() }}
+        <style>
+            {% include "picocss/theme.css" %}
+        </style>
+    </head>
+    <body{% if theme_data.theme_settings.fluid %} class="fluid"{% endif %}>
+        <div
+            data-theme="generated"
+            {% if theme_data.theme_settings.page_width and not theme_data.theme_settings.fluid %} style="max-width: {{ theme_data.theme_settings.page_width }}" {% endif %}
+            {% if not theme_data.theme_settings.fluid %} class="container"{% endif %}>
+
+            {% if theme_data.theme_settings.header %}
+                <header id="lona-header">
+                    {% include "picocss/header.html" %}
+                </header>
+            {% endif %}
+
+            <main id="lona"></main>
+
+            {% if theme_data.theme_settings.footer %}
+                <footer id="lona-footer">
+                    {% include "picocss/footer.html" %}
+                </footer>
+            {% endif %}
+        </div>
+
+        {{ Lona.load_scripts() }}
+        <script>
+            window.addEventListener('load', () => {
+                const lona_context = new Lona.LonaContext({
+                    target: 'main#lona',
+                    title: '{{ theme_data.theme_settings.title }}',
+                    update_address_bar: true,
+                    update_title: true,
+                    follow_redirects: true,
+                    follow_http_redirects: true,
+                });
+
+                // auto-reconnect
+                {% if theme_data.theme_settings.auto_reconnect %}
+                    let first_connect = true;
+
+                    lona_context.add_connect_hook((lona_context) => {
+                        if(!first_connect) {
+                            window.location = window.location;
+
+                            return;
+                        }
+
+                        first_connect = false;
+
+                        // patch navigation links
+                        if(document.querySelector('header#lona-header')) {
+                            lona_context.patch_input_events('header#lona-header');
+                        }
+                    });
+
+                    lona_context.add_disconnect_hook((lona_context) => {
+                        document.querySelector('main#lona').innerHTML = `
+                            {% include "picocss/disconnect-message.html" %}
+                        `;
+
+                        setTimeout(() => {
+                            lona_context.reconnect();
+
+                        }, 1000);
+                    });
+                {% endif %}
+
+                // setup
+                lona_context.setup();
+                window['lona_context'] = lona_context;
+            });
+        </script>
+    </body>
+</html>

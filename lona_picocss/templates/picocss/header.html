@@ -1,0 +1,22 @@
+{% set resolve_url = Lona.import('lona_picocss.themes.resolve_url') %}
+<nav>
+    <ul>
+        <li><a href="/" id="brand">{% if theme_data.theme_settings.logo %}<img src="{{ Lona.load_static_file(theme_data.theme_settings.logo) }}"> {% endif %}{% if theme_data.theme_settings.brand %}<strong>{{ theme_data.theme_settings.brand }}</strong>{% endif %}</a></li>
+    </ul>
+    <ul>
+        {% for label, target in theme_data.theme_settings.menu %}
+            {% if isinstance(target, str) %}
+                <li><a href="{{ resolve_url(Lona, target) }}">{{ label }}</a></li>
+            {% elif isinstance(target, list) %}
+                <li role="list" dir="rtl">
+                    <a href="#" aria-haspopup="listbox">{{ label }}</a>
+                    <ul role="listbox">
+                        {% for sub_label, sub_target in target %}
+                            <li><a href="{{ resolve_url(Lona, sub_target) }}">{{ sub_label }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+</nav>
