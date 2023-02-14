@@ -8,7 +8,7 @@ lona-picocss switches work like [Lona CheckBoxes](https://lona-web.org/1.x/end-u
 
 
 ```python
-from lona_picocss.html import HTML, Modal, H1, Label
+from lona_picocss.html import HTML, H1, Label, Switch
 from lona import View
 
 

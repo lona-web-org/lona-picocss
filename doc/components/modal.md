@@ -3,7 +3,7 @@
 ![Modal](../../doc/screenshots/modal.png)
 
 ```python
-from lona_picocss.html import HTML, Modal, InlineButton, H1
+from lona_picocss.html import HTML, Modal, InlineButton, H1, H3, P
 from lona import View
 
 
@@ -43,7 +43,8 @@ class ModalView(View):
 
         return HTML(
             H1('Modal'),
-            InlineButton('Open Modal', handle_click=self.modal.open()),
+            InlineButton('Open Modal', handle_click=lambda i: self.modal.open()),
+            self.modal,
         )
 ```
 

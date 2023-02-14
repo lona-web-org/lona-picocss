@@ -3,7 +3,7 @@
 ![Cards](../../doc/screenshots/cards.png)
 
 ```python
-from lona_picocss.html import HTML, Card, Grid, Div, H1, H2
+from lona_picocss.html import HTML, Card, H1
 from lona import View
 
 
