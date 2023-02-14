@@ -8,7 +8,7 @@ Put these lines into a new Python file:
 from lona_picocss import install_picocss
 from lona import App
 
-app = LonaApp(__file__)
+app = App(__file__)
 
 install_picocss(app, debug=True)  # remove 'debug' in production
 
@@ -39,7 +39,7 @@ from lona_picocss.html import HTML, H1, InlineButton
 from lona_picocss import install_picocss
 from lona import App, View
 
-app = LonaApp(__file__)
+app = App(__file__)
 
 install_picocss(app, debug=True)  # remove 'debug' in production
 
