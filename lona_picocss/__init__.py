@@ -98,3 +98,6 @@ def install_picocss(app, debug=False):
                 name='picocss__components__modal',
             ),
         ])
+
+    else:
+        app.settings.PICOCSS_MENU = []
