@@ -9,22 +9,19 @@ PYTHON_PACKAGING_ENV=$(PYTHON_ENV_ROOT)/$(PYTHON)-packaging
 PYTHON_TESTING_ENV=$(PYTHON_ENV_ROOT)/$(PYTHON)-testing
 
 
-.PHONY: all clean distclean shell python-shell test-script dist _release
+.PHONY: all clean pull-picocss shell python-shell test-script dist _release
 
-all: | $(DIST_ROOT)
+all: | test-script
 
 clean:
-	rm -rf $(DIST_ROOT)
-
-distclean:
 	rm -rf node_modules
 	rm -rf $(PYTHON_ENV_ROOT)
 
-# static files ################################################################
+# npm #########################################################################
 node_modules: package.json
 	npm install
 
-$(DIST_ROOT): | node_modules
+pull-picocss: | node_modules
 	rm -rf $(DIST_ROOT)
 	mkdir -p $(DIST_ROOT)
 	cp node_modules/@picocss/pico/css/pico.min.css $(DIST_ROOT)
@@ -52,21 +49,21 @@ $(PYTHON_TESTING_ENV): pyproject.toml
 	pip install .[testing]
 
 # helper
-shell: all | $(PYTHON_DEV_ENV)
+shell: $(PYTHON_DEV_ENV)
 	. $(PYTHON_DEV_ENV)/bin/activate && \
 	/bin/bash
 
-python-shell: all | $(PYTHON_DEV_ENV)
+python-shell: $(PYTHON_DEV_ENV)
 	. $(PYTHON_DEV_ENV)/bin/activate && \
 	rlpython
 
 # tests
-test-script: all | $(PYTHON_DEV_ENV)
+test-script: $(PYTHON_DEV_ENV)
 	. $(PYTHON_DEV_ENV)/bin/activate && \
 	$(PYTHON) test-script/test_script.py $(args)
 
 # packaging
-dist: all | $(PYTHON_PACKAGING_ENV)
+dist: $(PYTHON_PACKAGING_ENV)
 	. $(PYTHON_PACKAGING_ENV)/bin/activate && \
 	rm -rf dist *.egg-info && \
 	python -m build
@@ -94,7 +91,7 @@ test-docker-build:
 		-f tests/docker/docker-compose.yml \
 		build --no-cache
 
-test: all
+test:
 	DOCKER_USER=$$(id -u):$$(id -g) \
 	ARGS=$(args) \
 		docker-compose \

@@ -312,24 +312,6 @@ THEME_SETTINGS = {
     'PICOCSS_TITLE': 'Lona',
     'PICOCSS_AUTO_RECONNECT': True,
     'PICOCSS_SHOW_EXCEPTIONS': True,
-
-    'PICOCSS_MENU': [
-        ['Settings', '!picocss__settings'],
-        ['Components', [
-            ['Typography', '!picocss__components__typography'],
-            ['Cards', '!picocss__components__cards'],
-            ['Forms', '!picocss__components__forms'],
-            ['Buttons', '!picocss__components__buttons'],
-            ['Progress', '!picocss__components__progress'],
-            ['Tabs', '!picocss__components__tabs'],
-            ['Modal', '!picocss__components__modal'],
-        ]],
-        ['Error Pages', [
-            ['Not Found Error', '/_picocss/not-found/'],
-            ['Internal Error', '!picocss__internal_error'],
-        ]],
-    ],
-
     'PICOCSS_THEME': ['dark', 'light'],  # FIXME: add 'auto'
     'PICOCSS_COLOR_SCHEME': list(COLOR_SCHEMES.keys()),
     'PICOCSS_PAGE_WIDTH': '',
@@ -360,6 +342,23 @@ CSS_VARIABLES = {
     'PICOCSS_NAV_LINK_SPACING_HORIZONTAL': '0.5rem',
     'PICOCSS_FORM_LABEL_FONT_WEIGHT': 'var(--font-weight)',
 }
+
+DEFAULT_MENU = [
+    ['Settings', '!picocss__settings'],
+    ['Components', [
+        ['Typography', '!picocss__components__typography'],
+        ['Cards', '!picocss__components__cards'],
+        ['Forms', '!picocss__components__forms'],
+        ['Buttons', '!picocss__components__buttons'],
+        ['Progress', '!picocss__components__progress'],
+        ['Tabs', '!picocss__components__tabs'],
+        ['Modal', '!picocss__components__modal'],
+    ]],
+    ['Error Pages', [
+        ['Not Found Error', '/_picocss/not-found/'],
+        ['Internal Error', '!picocss__internal_error'],
+    ]],
+]
 
 SETTINGS = {
     **THEME_SETTINGS,

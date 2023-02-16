@@ -1,6 +1,6 @@
 # Customization
 
-lona-picocss comes with a visual theme configuratior built-in.
+lona-picocss comes with a visual theme configurator built-in.
 Make sure you [installed](./getting-started.md#getting-started) lona-picocss with `debug` set to `True`, and go to `/_picocss/settings`.
 The configurator applies all changes live. After you are done, copy all settings from `Compiled Settings` into your script, to make your changes permanent.
 
@@ -9,7 +9,7 @@ The configurator applies all changes live. After you are done, copy all settings
 
 ## Menu
 
-The default template of lona-picocss has support for a menu at the top. To configurate its contents set `settings.PICOCSS_MENU`, like in this example.
+The default template of lona-picocss has support for a menu at the top. To configure its contents set `settings.PICOCSS_MENU`, like in this example.
 When `app.settings.PICOCSS_MENU` is set to an empty list, the menu does not get rendered.
 
 ```python

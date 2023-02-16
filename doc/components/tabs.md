@@ -4,9 +4,15 @@
 
 ```python
 from lona_picocss.html import HTML, Tabs, H1
-from lona import View
+from lona_picocss import install_picocss
+from lona import View, App
+
+app = App(__file__)
+
+install_picocss(app, debug=True)
 
 
+@app.route('/')
 class TabsView(View):
     def handle_request(self, request):
         return HTML(
@@ -19,6 +25,8 @@ class TabsView(View):
             ),
         )
 
+
+app.run()
 ```
 
 ## Arguments

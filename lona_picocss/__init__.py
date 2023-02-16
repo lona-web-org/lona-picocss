@@ -1,5 +1,6 @@
-from lona import Route
+import logging
 
+from lona import Route
 
 from lona_picocss.views.components.typography import TypographyView
 from lona_picocss.views.components.progress import ProgressView
@@ -22,6 +23,8 @@ from lona_picocss.views.error_views import (
 VERSION = (0, 1, 1)
 VERSION_STRING = '.'.join(str(i) for i in VERSION)
 
+logger = logging.getLogger('lona-picocss')
+
 
 def install_picocss(app, debug=False):
     app.settings.PICOCSS_LONA_PROJECT_TYPE = 'app'
@@ -36,6 +39,15 @@ def install_picocss(app, debug=False):
     app.settings.FRONTEND_TEMPLATE = settings.FRONTEND_TEMPLATE
     app.settings.ERROR_404_VIEW = Error404View
     app.settings.ERROR_500_VIEW = Error500View
+
+    # setup middlewares
+    @app.middleware
+    class PicocssDebugWarningMiddleware:
+        async def on_startup(self, data):
+            # this has do be done using a middleware, so the warning gets
+            # logged after the logging is fully setup (color, format, etc)
+
+            logger.warning('running in debug mode')
 
     # setup views
     app.routes.append(
@@ -99,5 +111,5 @@ def install_picocss(app, debug=False):
             ),
         ])
 
-    else:
-        app.settings.PICOCSS_MENU = []
+        if 'PICOCSS_MENU' not in app.settings:
+            app.settings.PICOCSS_MENU = settings.DEFAULT_MENU
