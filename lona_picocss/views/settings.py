@@ -70,18 +70,15 @@ class SettingsView(View):
             Grid(
                 Div(),
                 Div(
-                    Label(
-                        'Actions',
-                        Grid(
-                            Button(
-                                'Reset',
-                                secondary=True,
-                                handle_click=self.reset,
-                            ),
-                            Button(
-                                'Apply',
-                                handle_click=self.apply,
-                            ),
+                    Grid(
+                        Button(
+                            'Reset',
+                            secondary=True,
+                            handle_click=self.reset,
+                        ),
+                        Button(
+                            'Apply',
+                            handle_click=self.apply,
                         ),
                     ),
                     Label(
@@ -92,10 +89,8 @@ class SettingsView(View):
                             },
                         ),
                     ),
-                    Label(
-                        'Preview',
-                        Div(id='preview'),
-                    ),
+                    Label('Preview'),
+                    Div(id='preview'),
                 ),
             ),
         )
