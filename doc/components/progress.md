@@ -4,9 +4,15 @@
 
 ```python
 from lona_picocss.html import HTML, Progress, H1, H2
-from lona import View
+from lona_picocss import install_picocss
+from lona import View, App
+
+app = App(__file__)
+
+install_picocss(app, debug=True)
 
 
+@app.route('/')
 class ProgressView(View):
     def handle_request(self, request):
         self.set_title('Progress')
@@ -21,6 +27,8 @@ class ProgressView(View):
             Progress(value=None),
         )
 
+
+app.run()
 ```
 
 ## Arguments
