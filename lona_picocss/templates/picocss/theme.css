@@ -11,8 +11,8 @@ body {
     height: calc(var(--font-size) * 2);
 }
 
-main#lona-main {
-    min-height: 75%;
+main#lona {
+    min-height: 100vh;
 }
 
 footer#lona-footer {
