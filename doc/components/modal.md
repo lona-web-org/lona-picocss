@@ -4,9 +4,15 @@
 
 ```python
 from lona_picocss.html import HTML, Modal, InlineButton, H1, H3, P
-from lona import View
+from lona_picocss import install_picocss
+from lona import View, App
+
+app = App(__file__)
+
+install_picocss(app, debug=True)
 
 
+@app.route('/')
 class ModalView(View):
     def handle_request(self, request):
         self.modal = Modal()
@@ -46,6 +52,9 @@ class ModalView(View):
             InlineButton('Open Modal', handle_click=lambda i: self.modal.open()),
             self.modal,
         )
+
+
+app.run()
 ```
 
 ## Arguments
