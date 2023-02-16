@@ -68,7 +68,7 @@ dist: $(PYTHON_PACKAGING_ENV)
 	rm -rf dist *.egg-info && \
 	python -m build
 
-_release: all dist
+_release: dist
 	. $(PYTHON_PACKAGING_ENV)/bin/activate && \
 	twine upload --config-file ~/.pypirc.fscherf dist/*
 
