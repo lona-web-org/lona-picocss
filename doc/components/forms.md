@@ -9,9 +9,15 @@ lona-picocss switches work like [Lona CheckBoxes](https://lona-web.org/1.x/end-u
 
 ```python
 from lona_picocss.html import HTML, H1, Label, Switch
-from lona import View
+from lona_picocss import install_picocss
+from lona import View, App
+
+app = App(__file__)
+
+install_picocss(app, debug=True)
 
 
+@app.route('/')
 class FormsView(View):
     def handle_request(self, request):
         return HTML(
@@ -21,4 +27,7 @@ class FormsView(View):
                 Switch(),
             ),
         )
+
+
+app.run()
 ```
