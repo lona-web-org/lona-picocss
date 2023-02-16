@@ -18,6 +18,7 @@ def get_theme_data(lona):
         'theme_settings': {},
         'css_variables': {},
         'color_scheme': {},
+        'menu': lona.server.settings.get('PICOCSS_MENU', []) or [],
     }
 
     # theme settings

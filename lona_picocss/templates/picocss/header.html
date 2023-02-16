@@ -4,7 +4,7 @@
         <li><a href="/" id="brand">{% if theme_data.theme_settings.logo %}<img src="{{ Lona.load_static_file(theme_data.theme_settings.logo) }}"> {% endif %}{% if theme_data.theme_settings.brand %}<strong>{{ theme_data.theme_settings.brand }}</strong>{% endif %}</a></li>
     </ul>
     <ul>
-        {% for label, target in theme_data.theme_settings.menu %}
+        {% for label, target in theme_data.menu %}
             {% if isinstance(target, str) %}
                 <li><a href="{{ resolve_url(Lona, target) }}">{{ label }}</a></li>
             {% elif isinstance(target, list) %}

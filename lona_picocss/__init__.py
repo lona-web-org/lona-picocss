@@ -99,5 +99,5 @@ def install_picocss(app, debug=False):
             ),
         ])
 
-    else:
-        app.settings.PICOCSS_MENU = []
+        if 'PICOCSS_MENU' not in app.settings:
+            app.settings.PICOCSS_MENU = settings.DEFAULT_MENU
