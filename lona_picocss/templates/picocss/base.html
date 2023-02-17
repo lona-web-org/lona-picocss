@@ -60,6 +60,21 @@
                         if(document.querySelector('header#lona-header')) {
                             lona_context.patch_input_events('header#lona-header');
                         }
+
+                        // auto close menu
+                        document.querySelectorAll('header#lona-header a').forEach(link => {
+                            if(link.getAttribute('href') == '#') {
+                                return;
+                            }
+
+                            link.addEventListener('click', () => {
+                                const details = link.closest('details');
+
+                                if(details) {
+                                    details.removeAttribute('open');
+                                }
+                            });
+                        });
                     });
 
                     lona_context.add_disconnect_hook((lona_context) => {
