@@ -9,6 +9,12 @@ class PicocssNode:
             url='/lona-picocss/dist/pico/css/pico.min.css',
             sort_order=SORT_ORDER.FRAMEWORK,
         ),
+        StyleSheet(
+            name='lona-picocss.css',
+            path='../static/lona-picocss/lona-picocss.css',
+            url='/lona-picocss/lona-picocss.css',
+            sort_order=SORT_ORDER.LIBRARY,
+        ),
         Script(
             name='picocss-widgets.js',
             path='../static/lona-picocss/picocss-widgets.js',
