@@ -59,6 +59,11 @@ async def test_screenshots(lona_app_context):
         await page.screenshot(path='doc/screenshots/error-500.png')
 
         # components ##########################################################
+        # icons
+        await page.goto(context.make_url('/_picocss/components/icons?no-form'))
+        await page.wait_for_selector('#lona h1:has-text("Icons")')
+        await page.screenshot(path='doc/screenshots/icons.png')
+
         # cards
         await page.goto(context.make_url('/_picocss/components/cards'))
         await page.wait_for_selector('#lona h1:has-text("Cards")')

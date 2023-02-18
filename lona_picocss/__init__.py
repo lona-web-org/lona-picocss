@@ -6,6 +6,7 @@ from lona_picocss.views.components.typography import TypographyView
 from lona_picocss.views.components.progress import ProgressView
 from lona_picocss.views.components.buttons import ButtonsView
 from lona_picocss.views.components.cards import CardsView
+from lona_picocss.views.components.icons import IconsView
 from lona_picocss.views.components.forms import FormsView
 from lona_picocss.views.components.modal import ModalView
 from lona_picocss.views.components.tabs import TabsView
@@ -78,6 +79,11 @@ def install_picocss(app, debug=False):
                 '/_picocss/components/typography(/)',
                 TypographyView,
                 name='picocss__components__typography',
+            ),
+            Route(
+                '/_picocss/components/icons(/)',
+                IconsView,
+                name='picocss__components__icons',
             ),
             Route(
                 '/_picocss/components/cards(/)',

@@ -347,6 +347,7 @@ DEFAULT_MENU = [
     ['Settings', '!picocss__settings'],
     ['Components', [
         ['Typography', '!picocss__components__typography'],
+        ['Icons', '!picocss__components__icons'],
         ['Cards', '!picocss__components__cards'],
         ['Forms', '!picocss__components__forms'],
         ['Buttons', '!picocss__components__buttons'],

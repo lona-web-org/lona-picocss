@@ -6,3 +6,4 @@
  - [Progress](components/progress.md)
  - [Tabs](components/tabs.md)
  - [Modal](components/modal.md)
+ - [Icons](components/icons.md)

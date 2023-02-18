@@ -31,6 +31,12 @@ npm-dependencies: | node_modules
 	cp -r node_modules/@picocss/pico/css $(DIST_ROOT)/pico/css
 	cp -r node_modules/@picocss/pico/scss $(DIST_ROOT)/pico/scss
 
+	# feather icons
+	mkdir -p $(DIST_ROOT)/feather-icons
+	cp node_modules/feather-icons/LICENSE $(DIST_ROOT)/feather-icons
+	cp -r node_modules/feather-icons/dist/* $(DIST_ROOT)/feather-icons
+	rm -rf $(DIST_ROOT)/feather-icons/icons
+
 # python ######################################################################
 $(PYTHON_DEV_ENV): pyproject.toml
 	rm -rf $(PYTHON_DEV_ENV) && \

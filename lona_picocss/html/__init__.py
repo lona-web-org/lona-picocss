@@ -6,5 +6,6 @@ from .generic import *  # NOQA
 from .inputs import *  # NOQA
 from .modal import *  # NOQA
 from .cards import *  # NOQA
+from .icons import *  # NOQA
 from .links import *  # NOQA
 from .tabs import *  # NOQA

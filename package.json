@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "@picocss/pico": "^1.5.7"
+    "@picocss/pico": "^1.5.7",
+    "feather-icons": "^4.29.0"
   }
 }
