@@ -6,6 +6,13 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        {% if theme_data.theme_settings.theme == 'dark' %}
+            <meta name="theme-color" content="#11191F">
+        {% elif theme_data.theme_settings.theme == 'light' %}
+            <meta name="theme-color" content="#FFFFFF">
+        {% endif %}
+
         {{ Lona.load_stylesheets() }}
         <style>
             {% include "picocss/color-scheme.css" %}
