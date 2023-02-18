@@ -18,8 +18,8 @@ class PicocssNode:
     STATIC_FILES = [
         StyleSheet(
             name='pico.min.css',
-            path='static/lona-picocss/dist/pico.min.css',
-            url='/lona-picocss/pico.min.css',
+            path='static/lona-picocss/dist/pico/css/pico.min.css',
+            url='/lona-picocss/dist/pico/css/pico.min.css',
             sort_order=SORT_ORDER.FRAMEWORK,
         ),
         Script(
