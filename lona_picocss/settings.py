@@ -358,6 +358,7 @@ DEFAULT_MENU = [
     ['Error Pages', [
         ['Not Found Error', '/_picocss/not-found/'],
         ['Internal Error', '!picocss__internal_error'],
+        ['Forbidden Error', '!picocss__forbidden_error'],
     ]],
 ]
 
