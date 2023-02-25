@@ -97,6 +97,17 @@
                     });
                 {% endif %}
 
+                // waiting for server message
+                lona_context.add_view_timeout_hook((lona_context, lona_window) => {
+                    lona_window.set_html(`
+                        {% include "picocss/waiting-for-server-message.html" %}
+                    `);
+                });
+
+                lona_context.add_input_event_timeout_hook((lona_context, lona_window) => {
+                    alert('Waiting for server');
+                });
+
                 // load icons
                 feather.replace();
 
