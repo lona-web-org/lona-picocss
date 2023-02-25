@@ -42,6 +42,12 @@
         {{ Lona.load_scripts() }}
         <script>
             window.addEventListener('load', () => {
+                {% if theme_data.theme_settings.auto_reconnect %}
+                    const auto_reconnect = true;
+                {% else %}
+                    const auto_reconnect = false;
+                {% endif %}
+
                 const lona_context = new Lona.LonaContext({
                     target: 'main#lona',
                     title: '{{ theme_data.theme_settings.title }}',
@@ -51,51 +57,52 @@
                     follow_http_redirects: true,
                 });
 
-                // auto-reconnect
-                {% if theme_data.theme_settings.auto_reconnect %}
-                    let first_connect = true;
+                let first_connect = true;
 
-                    lona_context.add_connect_hook((lona_context) => {
-                        if(!first_connect) {
-                            window.location = window.location;
+                lona_context.add_connect_hook((lona_context) => {
+                    if(!first_connect) {
+                        window.location = window.location;
 
+                        return;
+                    }
+
+                    first_connect = false;
+
+                    // patch navigation links
+                    if(document.querySelector('header#lona-header')) {
+                        lona_context.patch_input_events('header#lona-header');
+                    }
+
+                    // auto close menu
+                    document.querySelectorAll('header#lona-header a').forEach(link => {
+                        if(link.getAttribute('href') == '#') {
                             return;
                         }
 
-                        first_connect = false;
+                        link.addEventListener('click', () => {
+                            const details = link.closest('details');
 
-                        // patch navigation links
-                        if(document.querySelector('header#lona-header')) {
-                            lona_context.patch_input_events('header#lona-header');
-                        }
-
-                        // auto close menu
-                        document.querySelectorAll('header#lona-header a').forEach(link => {
-                            if(link.getAttribute('href') == '#') {
-                                return;
+                            if(details) {
+                                details.removeAttribute('open');
                             }
-
-                            link.addEventListener('click', () => {
-                                const details = link.closest('details');
-
-                                if(details) {
-                                    details.removeAttribute('open');
-                                }
-                            });
                         });
                     });
+                });
 
-                    lona_context.add_disconnect_hook((lona_context) => {
-                        document.querySelector('main#lona').innerHTML = `
-                            {% include "picocss/disconnect-message.html" %}
-                        `;
+                lona_context.add_disconnect_hook((lona_context) => {
+                    document.querySelector('main#lona').innerHTML = `
+                        {% include "picocss/disconnect-message.html" %}
+                    `;
 
-                        setTimeout(() => {
-                            lona_context.reconnect();
+                    if(!auto_reconnect) {
+                        return;
+                    }
 
-                        }, 1000);
-                    });
-                {% endif %}
+                    setTimeout(() => {
+                        lona_context.reconnect();
+
+                    }, 1000);
+                });
 
                 // waiting for server message
                 lona_context.add_view_timeout_hook((lona_context, lona_window) => {
