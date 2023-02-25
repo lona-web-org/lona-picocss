@@ -9,7 +9,7 @@ PYTHON_PACKAGING_ENV=$(PYTHON_ENV_ROOT)/$(PYTHON)-packaging
 PYTHON_TESTING_ENV=$(PYTHON_ENV_ROOT)/$(PYTHON)-testing
 
 
-.PHONY: all clean pull-picocss shell python-shell test-script dist _release
+.PHONY: all clean npm-dependencies shell python-shell test-script dist _release
 
 all: | test-script
 
@@ -21,10 +21,21 @@ clean:
 node_modules: package.json
 	npm install
 
-pull-picocss: | node_modules
+npm-dependencies: | node_modules
 	rm -rf $(DIST_ROOT)
 	mkdir -p $(DIST_ROOT)
-	cp node_modules/@picocss/pico/css/pico.min.css $(DIST_ROOT)
+
+	# picocss
+	mkdir -p $(DIST_ROOT)/pico
+	cp node_modules/@picocss/pico/LICENSE.md $(DIST_ROOT)/pico
+	cp -r node_modules/@picocss/pico/css $(DIST_ROOT)/pico/css
+	cp -r node_modules/@picocss/pico/scss $(DIST_ROOT)/pico/scss
+
+	# feather icons
+	mkdir -p $(DIST_ROOT)/feather-icons
+	cp node_modules/feather-icons/LICENSE $(DIST_ROOT)/feather-icons
+	cp -r node_modules/feather-icons/dist/* $(DIST_ROOT)/feather-icons
+	rm -rf $(DIST_ROOT)/feather-icons/icons
 
 # python ######################################################################
 $(PYTHON_DEV_ENV): pyproject.toml

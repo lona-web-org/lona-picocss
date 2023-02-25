@@ -2,8 +2,27 @@ import traceback
 import html
 import sys
 
+from lona import View, ForbiddenError
 from lona_picocss import settings
-from lona import View
+
+
+class Error403View(View):
+    def handle_request(self, request, exception):
+        if not request.interactive:
+            return {
+                'template': 'picocss/base.html',
+                'request': request,
+            }
+
+        message = 'Forbidden'
+
+        if exception.args:
+            message = exception.args[0]
+
+        return f"""
+            <h1>Error 403</h1>
+            <p>{message}</p>
+        """
 
 
 class Error404View(View):
@@ -67,3 +86,8 @@ class Error500View(View):
 class InternalErrorView(View):
     def handle_request(self, request):
         raise RuntimeError('Internal Error')
+
+
+class ForbiddenErrorView(View):
+    def handle_request(self, request):
+        raise ForbiddenError()

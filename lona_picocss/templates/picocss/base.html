@@ -6,9 +6,16 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        {% if theme_data.theme_settings.theme == 'dark' %}
+            <meta name="theme-color" content="#11191F">
+        {% elif theme_data.theme_settings.theme == 'light' %}
+            <meta name="theme-color" content="#FFFFFF">
+        {% endif %}
+
         {{ Lona.load_stylesheets() }}
         <style>
-            {% include "picocss/theme.css" %}
+            {% include "picocss/color-scheme.css" %}
         </style>
     </head>
     <body{% if theme_data.theme_settings.fluid %} class="fluid"{% endif %}>
@@ -35,6 +42,12 @@
         {{ Lona.load_scripts() }}
         <script>
             window.addEventListener('load', () => {
+                {% if theme_data.theme_settings.auto_reconnect %}
+                    const auto_reconnect = true;
+                {% else %}
+                    const auto_reconnect = false;
+                {% endif %}
+
                 const lona_context = new Lona.LonaContext({
                     target: 'main#lona',
                     title: '{{ theme_data.theme_settings.title }}',
@@ -44,51 +57,66 @@
                     follow_http_redirects: true,
                 });
 
-                // auto-reconnect
-                {% if theme_data.theme_settings.auto_reconnect %}
-                    let first_connect = true;
+                let first_connect = true;
 
-                    lona_context.add_connect_hook((lona_context) => {
-                        if(!first_connect) {
-                            window.location = window.location;
+                lona_context.add_connect_hook((lona_context) => {
+                    if(!first_connect) {
+                        window.location = window.location;
 
+                        return;
+                    }
+
+                    first_connect = false;
+
+                    // patch navigation links
+                    if(document.querySelector('header#lona-header')) {
+                        lona_context.patch_input_events('header#lona-header');
+                    }
+
+                    // auto close menu
+                    document.querySelectorAll('header#lona-header a').forEach(link => {
+                        if(link.getAttribute('href') == '#') {
                             return;
                         }
 
-                        first_connect = false;
+                        link.addEventListener('click', () => {
+                            const details = link.closest('details');
 
-                        // patch navigation links
-                        if(document.querySelector('header#lona-header')) {
-                            lona_context.patch_input_events('header#lona-header');
-                        }
-
-                        // auto close menu
-                        document.querySelectorAll('header#lona-header a').forEach(link => {
-                            if(link.getAttribute('href') == '#') {
-                                return;
+                            if(details) {
+                                details.removeAttribute('open');
                             }
-
-                            link.addEventListener('click', () => {
-                                const details = link.closest('details');
-
-                                if(details) {
-                                    details.removeAttribute('open');
-                                }
-                            });
                         });
                     });
+                });
 
-                    lona_context.add_disconnect_hook((lona_context) => {
-                        document.querySelector('main#lona').innerHTML = `
-                            {% include "picocss/disconnect-message.html" %}
-                        `;
+                lona_context.add_disconnect_hook((lona_context) => {
+                    document.querySelector('main#lona').innerHTML = `
+                        {% include "picocss/disconnect-message.html" %}
+                    `;
 
-                        setTimeout(() => {
-                            lona_context.reconnect();
+                    if(!auto_reconnect) {
+                        return;
+                    }
 
-                        }, 1000);
-                    });
-                {% endif %}
+                    setTimeout(() => {
+                        lona_context.reconnect();
+
+                    }, 1000);
+                });
+
+                // waiting for server message
+                lona_context.add_view_timeout_hook((lona_context, lona_window) => {
+                    lona_window.set_html(`
+                        {% include "picocss/waiting-for-server-message.html" %}
+                    `);
+                });
+
+                lona_context.add_input_event_timeout_hook((lona_context, lona_window) => {
+                    alert('Waiting for server');
+                });
+
+                // load icons
+                feather.replace();
 
                 // setup
                 lona_context.setup();

@@ -48,6 +48,11 @@ async def test_screenshots(lona_app_context):
         await page.screenshot(path='doc/screenshots/settings.png')
 
         # error pages #########################################################
+        # 403
+        await page.goto(context.make_url('/_picocss/not-found'))
+        await page.wait_for_selector('#lona h1:has-text("Error 403")')
+        await page.screenshot(path='doc/screenshots/error-403.png')
+
         # 404
         await page.goto(context.make_url('/_picocss/not-found'))
         await page.wait_for_selector('#lona h1:has-text("Error 404")')
@@ -59,6 +64,11 @@ async def test_screenshots(lona_app_context):
         await page.screenshot(path='doc/screenshots/error-500.png')
 
         # components ##########################################################
+        # icons
+        await page.goto(context.make_url('/_picocss/components/icons?no-form'))
+        await page.wait_for_selector('#lona h1:has-text("Icons")')
+        await page.screenshot(path='doc/screenshots/icons.png')
+
         # cards
         await page.goto(context.make_url('/_picocss/components/cards'))
         await page.wait_for_selector('#lona h1:has-text("Cards")')

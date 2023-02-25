@@ -6,6 +6,7 @@ from lona_picocss.views.components.typography import TypographyView
 from lona_picocss.views.components.progress import ProgressView
 from lona_picocss.views.components.buttons import ButtonsView
 from lona_picocss.views.components.cards import CardsView
+from lona_picocss.views.components.icons import IconsView
 from lona_picocss.views.components.forms import FormsView
 from lona_picocss.views.components.modal import ModalView
 from lona_picocss.views.components.tabs import TabsView
@@ -14,7 +15,9 @@ from lona_picocss.views.it_works import ItWorksView
 from lona_picocss import settings
 
 from lona_picocss.views.error_views import (
+    ForbiddenErrorView,
     InternalErrorView,
+    Error403View,
     Error404View,
     Error500View,
 )
@@ -37,6 +40,7 @@ def install_picocss(app, debug=False):
     app.settings.STATIC_DIRS.append(settings.STATIC_DIR)
     app.settings.FRONTEND_TEMPLATE = settings.FRONTEND_TEMPLATE
     app.settings.FRONTEND_TEMPLATE = settings.FRONTEND_TEMPLATE
+    app.settings.ERROR_403_VIEW = Error403View
     app.settings.ERROR_404_VIEW = Error404View
     app.settings.ERROR_500_VIEW = Error500View
 
@@ -61,6 +65,13 @@ def install_picocss(app, debug=False):
     if debug:
         app.routes.extend([
 
+            # settings
+            Route(
+                '/_picocss/settings(/)',
+                SettingsView,
+                name='picocss__settings',
+            ),
+
             # error views
             Route(
                 '/_picocss/internal-error(/)',
@@ -68,9 +79,9 @@ def install_picocss(app, debug=False):
                 name='picocss__internal_error',
             ),
             Route(
-                '/_picocss/settings(/)',
-                SettingsView,
-                name='picocss__settings',
+                '/_picocss/forbidden-error(/)',
+                ForbiddenErrorView,
+                name='picocss__forbidden_error',
             ),
 
             # component views
@@ -78,6 +89,11 @@ def install_picocss(app, debug=False):
                 '/_picocss/components/typography(/)',
                 TypographyView,
                 name='picocss__components__typography',
+            ),
+            Route(
+                '/_picocss/components/icons(/)',
+                IconsView,
+                name='picocss__components__icons',
             ),
             Route(
                 '/_picocss/components/cards(/)',

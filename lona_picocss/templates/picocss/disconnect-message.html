@@ -1,2 +1,4 @@
 <h1>Server Disconnected</h1>
-Trying to reconnect <i aria-busy="true"></i>
+{% if theme_data.theme_settings.auto_reconnect %}
+    Trying to reconnect <i aria-busy="true"></i>
+{% endif %}

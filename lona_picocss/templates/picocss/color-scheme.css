@@ -1,26 +1,5 @@
-body {
-    padding: 0 var(--spacing);
-}
-
-#brand {
-    color: inherit !important;
-    background: inherit !important;
-}
-
-#brand img {
-    height: calc(var(--font-size) * 2);
-}
-
-main#lona {
-    min-height: 100vh;
-}
-
-footer#lona-footer {
-    min-height: 4em;
-}
-
-{# color theme #}
 {# based on https://github.com/picocss/pico/blob/45e4a588435ce5977e23a8f9034542d7a8d76922/docs/js/src/color-picker.js#L112 #}
+
 [data-theme="generated"] {
     --h4-color: {{ theme_data['color_scheme']['700'] }};
     --primary: {{ theme_data['color_scheme']['600'] }};
