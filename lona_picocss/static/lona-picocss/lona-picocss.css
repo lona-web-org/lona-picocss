@@ -35,3 +35,22 @@ footer#lona-footer {
         margin-bottom: calc(var(--nav-element-spacing-horizontal) * 2);
     }
 }
+
+/* scroller ---------------------------------------------------------------- */
+.scroller {
+    overflow-y: scroll;
+    overflow-x: auto;
+}
+
+.scroller * {
+    overflow-anchor: none;
+}
+
+.scroller .scroller-body {
+    min-height: 101%;
+}
+
+.scroller .scroller-anchor {
+    overflow-anchor: auto;
+    height: 1px;
+}

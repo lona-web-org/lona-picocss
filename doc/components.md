@@ -7,3 +7,4 @@
  - [Tabs](components/tabs.md)
  - [Modal](components/modal.md)
  - [Icons](components/icons.md)
+ - [Scroller](components/scroller.md)

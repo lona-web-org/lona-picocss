@@ -3,6 +3,7 @@ import logging
 from lona import Route
 
 from lona_picocss.views.components.typography import TypographyView
+from lona_picocss.views.components.scroller import ScrollerView
 from lona_picocss.views.components.progress import ProgressView
 from lona_picocss.views.components.buttons import ButtonsView
 from lona_picocss.views.components.cards import CardsView
@@ -124,6 +125,11 @@ def install_picocss(app, debug=False):
                 '/_picocss/components/modal(/)',
                 ModalView,
                 name='picocss__components__modal',
+            ),
+            Route(
+                '/_picocss/components/scroller(/)',
+                ScrollerView,
+                name='picocss__components__scroller',
             ),
         ])
 

@@ -1,6 +1,6 @@
-// based on https://github.com/picocss/pico/blob/45e4a588435ce5977e23a8f9034542d7a8d76922/docs/js/modal.js
-
 class LonaPicocssModalWidget {
+    // based on https://github.com/picocss/pico/blob/45e4a588435ce5977e23a8f9034542d7a8d76922/docs/js/modal.js
+
     constructor(lona_window) {
         this.lona_window = lona_window;
 
@@ -97,4 +97,15 @@ class LonaPicocssModalWidget {
 }
 
 
+class LonaPicocssScrollerWidget {
+    constructor(lona_window, root_node) {
+        this.lona_window = lona_window;
+        this.root_node = root_node;
+
+        this.root_node.scrollTo(0, this.root_node.scrollHeight);
+    }
+}
+
+
 Lona.register_widget_class('LonaPicocssModalWidget', LonaPicocssModalWidget);
+Lona.register_widget_class('LonaPicocssScrollerWidget', LonaPicocssScrollerWidget);

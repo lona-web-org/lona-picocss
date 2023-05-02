@@ -354,6 +354,7 @@ DEFAULT_MENU = [
         ['Progress', '!picocss__components__progress'],
         ['Tabs', '!picocss__components__tabs'],
         ['Modal', '!picocss__components__modal'],
+        ['Scroller', '!picocss__components__scroller'],
     ]],
     ['Error Pages', [
         ['Not Found Error', '/_picocss/not-found/'],

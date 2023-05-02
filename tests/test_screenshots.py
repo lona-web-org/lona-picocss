@@ -103,6 +103,11 @@ async def test_screenshots(lona_app_context):
 
         await page.screenshot(path='doc/screenshots/modal.png')
 
+        # scroller
+        await page.goto(context.make_url('/_picocss/components/scroller'))
+        await page.wait_for_selector('#lona h1:has-text("Scroller")')
+        await page.screenshot(path='doc/screenshots/scroller.png')
+
         # themes ##############################################################
         for name in ['light', 'dark']:
             await page.goto(context.make_url('/_picocss/settings'))
