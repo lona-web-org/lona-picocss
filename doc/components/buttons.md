@@ -32,6 +32,8 @@ app.run()
 | - | - | - |
 | secondary | bool | Secondary styling |
 | outline | bool | Outline styling |
+| contrast | bool | Contrast styling |
+| disabled | bool | Disable Button |
 
 
 ## Properties
@@ -40,3 +42,5 @@ app.run()
 | - | - | - |
 | secondary | bool | Secondary styling |
 | outline | bool | Outline styling |
+| contrast | bool | Contrast styling |
+| disabled | bool | Disable Button |

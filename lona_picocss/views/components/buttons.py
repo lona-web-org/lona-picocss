@@ -16,6 +16,8 @@ class ButtonsView(View):
                     Button('Primary Button'),
                     Button('Secondary Button', secondary=True),
                     Button('Outline Button', outline=True),
+                    Button('Contrast Button', contrast=True),
+                    Button('Disabled Button', disabled=True),
                 ),
                 Div(
                     H2('Inline'),
@@ -24,6 +26,10 @@ class ButtonsView(View):
                     InlineButton('Secondary Button', secondary=True),
                     ' ',
                     InlineButton('Outline Button', outline=True),
+                    ' ',
+                    InlineButton('Contrast Button', contrast=True),
+                    ' ',
+                    InlineButton('Disabled Button', disabled=True),
                 ),
             ),
         )
