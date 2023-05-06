@@ -24,7 +24,7 @@ from lona_picocss.views.error_views import (
 )
 
 
-VERSION = (0, 3)
+VERSION = (0, 3, 1)
 VERSION_STRING = '.'.join(str(i) for i in VERSION)
 
 logger = logging.getLogger('lona-picocss')
