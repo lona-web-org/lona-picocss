@@ -52,7 +52,8 @@ def install_picocss(app, debug=False):
             # this has do be done using a middleware, so the warning gets
             # logged after the logging is fully setup (color, format, etc)
 
-            logger.warning('running in debug mode')
+            if debug:
+                logger.warning('running in debug mode')
 
     # setup views
     app.routes.append(
