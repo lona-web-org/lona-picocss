@@ -99,8 +99,9 @@
                     }
 
                     setTimeout(() => {
-                        lona_context.reconnect();
-
+                        lona_context.reconnect({
+                            create_window: false,
+                        });
                     }, 1000);
                 });
 
