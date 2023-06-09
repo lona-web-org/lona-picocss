@@ -13,6 +13,7 @@ from lona_picocss.views.components.modal import ModalView
 from lona_picocss.views.components.tabs import TabsView
 from lona_picocss.views.settings import SettingsView
 from lona_picocss.views.it_works import ItWorksView
+from lona_picocss.middlewares import LonaPicocssMiddleware
 from lona_picocss import settings
 
 from lona_picocss.views.error_views import (
@@ -54,6 +55,8 @@ def install_picocss(app, debug=False):
 
             if debug:
                 logger.warning('running in debug mode')
+
+    app.middleware(LonaPicocssMiddleware)
 
     # setup views
     app.routes.append(

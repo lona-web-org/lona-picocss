@@ -60,12 +60,7 @@ class Error500View(View):
 
     def handle_request(self, request, exception):
         if request.interactive:
-            show_exceptions = self.server.settings.get(
-                'PICOCSS_SHOW_EXCEPTIONS',
-                settings.DEFAULTS['PICOCSS_SHOW_EXCEPTIONS'],
-            )
-
-            if show_exceptions:
+            if settings.get('PICOCSS_SHOW_EXCEPTIONS'):
                 return f"""
                     <h1>Error 500</h1>
                     <p>Internal Error</p>
