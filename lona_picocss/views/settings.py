@@ -132,7 +132,7 @@ class SettingsView(View):
             values = settings.get_default(name, value)
 
             # unsupported settings
-            if name in ('PICOCSS_MENU', ):
+            if name in ('PICOCSS_NAVIGATION', ):
                 continue
 
             # string values

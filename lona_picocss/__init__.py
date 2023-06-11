@@ -14,6 +14,7 @@ from lona_picocss.views.components.tabs import TabsView
 from lona_picocss.views.settings import SettingsView
 from lona_picocss.views.it_works import ItWorksView
 from lona_picocss.middlewares import LonaPicocssMiddleware
+from lona_picocss.navigation import get_debug_navigation, NavItem
 from lona_picocss import settings
 
 from lona_picocss.views.error_views import (
@@ -137,5 +138,5 @@ def install_picocss(app, debug=False):
             ),
         ])
 
-        if 'PICOCSS_MENU' not in app.settings:
-            app.settings.PICOCSS_MENU = settings.DEFAULT_MENU
+        if 'PICOCSS_NAVIGATION' not in app.settings:
+            app.settings.PICOCSS_NAVIGATION = get_debug_navigation

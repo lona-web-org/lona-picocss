@@ -6,26 +6,6 @@ TEMPLATE_DIR = os.path.join(os.path.dirname(__file__), 'templates')
 STATIC_DIR = os.path.join(os.path.dirname(__file__), 'static')
 FRONTEND_TEMPLATE = 'picocss/base.html'
 
-DEFAULT_MENU = [
-    ['Settings', '!picocss__settings'],
-    ['Components', [
-        ['Typography', '!picocss__components__typography'],
-        ['Icons', '!picocss__components__icons'],
-        ['Cards', '!picocss__components__cards'],
-        ['Forms', '!picocss__components__forms'],
-        ['Buttons', '!picocss__components__buttons'],
-        ['Progress', '!picocss__components__progress'],
-        ['Tabs', '!picocss__components__tabs'],
-        ['Modal', '!picocss__components__modal'],
-        ['Scroller', '!picocss__components__scroller'],
-    ]],
-    ['Error Pages', [
-        ['Not Found Error', '/_picocss/not-found/'],
-        ['Internal Error', '!picocss__internal_error'],
-        ['Forbidden Error', '!picocss__forbidden_error'],
-    ]],
-]
-
 SETTINGS_DEFAULTS = {
     'PICOCSS_BRAND': 'Lona',
     'PICOCSS_LOGO': 'lona-picocss/logo.svg',
@@ -38,7 +18,7 @@ SETTINGS_DEFAULTS = {
     'PICOCSS_HEADER': True,
     'PICOCSS_FOOTER': True,
     'PICOCSS_FLUID': False,
-    'PICOCSS_MENU': [],
+    'PICOCSS_NAVIGATION': [],
 }
 
 CSS_VARIABLES_DEFAULTS = {
@@ -158,7 +138,7 @@ def render_theme():
 
 
 # templating ##################################################################
-def get_theme_data():
+def get_theme_data(request=None):
 
     # logo
     logo_path = get('PICOCSS_LOGO')
@@ -169,6 +149,16 @@ def get_theme_data():
             logo_path,
         )
 
+    # navigation
+    if request is None:
+        navigation = []
+
+    else:
+        navigation = get('PICOCSS_NAVIGATION')
+
+        if callable(navigation):
+            navigation = navigation(_lona_server, request)
+
     # theme data
     theme_data = {
         'color_scheme': COLOR_SCHEMES[get('PICOCSS_COLOR_SCHEME')],
@@ -176,6 +166,7 @@ def get_theme_data():
         'css_variables': {},
         'css_string': _css_string,
         'logo_path': logo_path,
+        'navigation': navigation,
 
         'stylesheet_urls': [
             os.path.join(
@@ -217,10 +208,3 @@ def hex_to_rgba(hex, alpha):
     red, green, blue = [int(hex[i:i+2], 16) for i in (0, 2, 4)]
 
     return f'rgba({red}, {green}, {blue}, {alpha})'
-
-
-def resolve_url(url):
-    if url.startswith('!'):
-        url = _lona_server.reverse(route_name=url[1:])
-
-    return url

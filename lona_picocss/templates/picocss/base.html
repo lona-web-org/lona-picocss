@@ -1,5 +1,5 @@
 {% set get_theme_data = Lona.import('lona_picocss.settings.get_theme_data') %}
-{% set theme_data = get_theme_data() %}
+{% set theme_data = get_theme_data(request) %}
 <!doctype html>
 <html data-theme="{{ theme_data.theme_settings.theme }}">
     <head>
