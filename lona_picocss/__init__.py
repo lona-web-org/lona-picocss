@@ -42,7 +42,6 @@ def install_picocss(app, debug=False):
     app.settings.TEMPLATE_DIRS.append(settings.TEMPLATE_DIR)
     app.settings.STATIC_DIRS.append(settings.STATIC_DIR)
     app.settings.FRONTEND_TEMPLATE = settings.FRONTEND_TEMPLATE
-    app.settings.FRONTEND_TEMPLATE = settings.FRONTEND_TEMPLATE
     app.settings.ERROR_403_VIEW = Error403View
     app.settings.ERROR_404_VIEW = Error404View
     app.settings.ERROR_500_VIEW = Error500View
