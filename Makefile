@@ -2,7 +2,7 @@ SHELL=/bin/bash
 PYTHON=python3
 PYTHON_ENV=env
 
-.PHONY: all clean npm-dependencies test-script dist _release
+.PHONY: all clean npm-dependencies dist _release test-script test-project
 
 
 all: | test-script
@@ -56,3 +56,10 @@ test:
 test-script: $(PYTHON_ENV)
 	. $(PYTHON_ENV)/bin/activate && \
 	$(PYTHON) test-script/test_script.py $(args)
+
+test-project: | $(PYTHON_VENV)
+	. $(PYTHON_ENV)/bin/activate && \
+	lona run-server \
+		--project-root=test-project \
+		-s settings.py \
+		$(args)
