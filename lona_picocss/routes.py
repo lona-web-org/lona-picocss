@@ -12,6 +12,7 @@ from lona_picocss.views.it_works import ItWorksView
 
 from lona_picocss.views.error_views import (
     ForbiddenErrorView,
+    NotFoundErrorView,
     InternalErrorView,
 )
 
@@ -33,14 +34,19 @@ DEMO_ROUTES = [
 
     # error views
     Route(
-        '/_picocss/internal-error(/)',
-        InternalErrorView,
-        name='picocss__internal_error',
-    ),
-    Route(
         '/_picocss/forbidden-error(/)',
         ForbiddenErrorView,
         name='picocss__forbidden_error',
+    ),
+    Route(
+        '/_picocss/not-found-error(/)',
+        NotFoundErrorView,
+        name='picocss__not_found_error',
+    ),
+    Route(
+        '/_picocss/internal-error(/)',
+        InternalErrorView,
+        name='picocss__internal_error',
     ),
 
     # component views

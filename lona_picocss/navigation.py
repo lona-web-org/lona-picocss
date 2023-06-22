@@ -71,16 +71,16 @@ def get_debug_navigation(server, request):
             icon='alert-triangle',
             nav_items=[
                 NavItem(
+                    title='Forbidden Error',
+                    url=server.reverse('picocss__forbidden_error'),
+                ),
+                NavItem(
                     title='Not Found Error',
-                    url='/_picocss/not-found/',
+                    url=server.reverse('picocss__not_found_error'),
                 ),
                 NavItem(
                     title='Internal Error',
                     url=server.reverse('picocss__internal_error'),
-                ),
-                NavItem(
-                    title='Forbidden Error',
-                    url=server.reverse('picocss__forbidden_error'),
                 ),
             ],
         ),

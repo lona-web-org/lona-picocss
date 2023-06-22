@@ -2,6 +2,7 @@ from lona import (
     TemplateResponse,
     RedirectResponse,
     ForbiddenError,
+    NotFoundError,
     View,
 )
 
@@ -52,11 +53,16 @@ class Error500View(View):
         })
 
 
-class InternalErrorView(View):
-    def handle_request(self, request):
-        raise RuntimeError('Internal Error')
-
-
 class ForbiddenErrorView(View):
     def handle_request(self, request):
         raise ForbiddenError()
+
+
+class NotFoundErrorView(View):
+    def handle_request(self, request):
+        raise NotFoundError()
+
+
+class InternalErrorView(View):
+    def handle_request(self, request):
+        raise RuntimeError('Internal Error')
