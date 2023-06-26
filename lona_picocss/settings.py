@@ -159,6 +159,16 @@ def get_theme_data(request=None):
         if callable(navigation):
             navigation = navigation(_lona_server, request)
 
+    # show_exceptions
+    show_exceptions = get('PICOCSS_SHOW_EXCEPTIONS')
+
+    if callable(show_exceptions):
+        if request is None:
+            show_exceptions = False
+
+        else:
+            show_exceptions = show_exceptions(_lona_server, request)
+
     # theme data
     theme_data = {
         'color_scheme': COLOR_SCHEMES[get('PICOCSS_COLOR_SCHEME')],
@@ -167,6 +177,7 @@ def get_theme_data(request=None):
         'css_string': _css_string,
         'logo_path': logo_path,
         'navigation': navigation,
+        'show_exceptions': show_exceptions,
 
         'stylesheet_urls': [
             os.path.join(

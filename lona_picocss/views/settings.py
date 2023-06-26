@@ -135,8 +135,13 @@ class SettingsView(View):
             if name in ('PICOCSS_NAVIGATION', ):
                 continue
 
+            # show exceptions
+            if name == 'PICOCSS_SHOW_EXCEPTIONS':
+                if callable(value):
+                    value = True
+
             # string values
-            elif isinstance(values, str):
+            if isinstance(values, str):
                 field = Label(
                     verbose_name,
                     TextInput(
