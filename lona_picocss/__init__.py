@@ -2,8 +2,14 @@ import logging
 
 from lona_picocss.routes import IT_WORKS_ROUTE, SETTINGS_ROUTE, DEMO_ROUTES
 from lona_picocss.middlewares import LonaPicocssMiddleware
-from lona_picocss.navigation import get_debug_navigation, NavItem
+from lona_picocss.utils import get_django_show_exceptions  # NOQA
 from lona_picocss import settings
+
+from lona_picocss.navigation import (  # NOQA
+    get_django_auth_navigation,
+    get_debug_navigation,
+    NavItem,
+)
 
 from lona_picocss.views.error_views import (
     Error403View,

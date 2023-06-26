@@ -54,6 +54,20 @@ header#lona-header summary svg {
     }
 }
 
+/* auth -------------------------------------------------------------------- */
+.auth-form dialog article {
+    min-width: 30em;
+}
+
+.auth-form dialog footer a {
+    width: 100%;
+}
+
+.auth-form .error,
+.auth-form .errorlist {
+	color: red;
+}
+
 /* scroller ---------------------------------------------------------------- */
 .scroller {
     overflow-y: scroll;

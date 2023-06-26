@@ -131,3 +131,76 @@ async def test_screenshots(lona_app_context):
             await page.screenshot(
                 path=f'doc/screenshots/color-scheme-{name}.png',
             )
+
+
+async def test_django_screenshots(test_django_project):
+    from playwright.async_api import async_playwright
+
+    from django.urls import reverse
+
+    async with async_playwright() as playwright:
+        browser = await playwright.chromium.launch()
+        browser_context = await browser.new_context()
+        page = await browser_context.new_page()
+
+        # login form
+        await page.goto(test_django_project.make_url(reverse('login')))
+        await page.wait_for_selector('#lona dialog[open] h3:has-text("Login")')
+
+        await page.fill('#lona dialog[open] input#id_username', 'admin')
+        await page.fill('#lona dialog[open] input#id_password', 'admin')
+
+        await page.screenshot(path='doc/screenshots/django-login-form.png')
+
+        # incorrect login
+        await page.fill('#lona dialog[open] input#id_password', 'incorrect')
+        await page.click('#lona dialog[open] input[type=submit]')
+
+        await page.wait_for_url(test_django_project.make_url(reverse('login')))
+
+        await page.screenshot(
+            path='doc/screenshots/django-incorrect-login.png',
+        )
+
+        # correct login
+        await page.fill('#lona dialog[open] input#id_username', 'admin')
+        await page.fill('#lona dialog[open] input#id_password', 'admin')
+        await page.click('#lona dialog[open] input[type=submit]')
+
+        await page.wait_for_url(test_django_project.make_url('/'))
+
+        await page.screenshot(path='doc/screenshots/django-correct-login.png')
+
+        # password change
+        await page.goto(
+            test_django_project.make_url(reverse('password_change')),
+        )
+
+        await page.wait_for_selector(
+            '#lona dialog[open] h3:has-text("Password Change")',
+        )
+
+        await page.screenshot(
+            path='doc/screenshots/django-password-change.png',
+        )
+
+        # password reset
+        await page.goto(
+            test_django_project.make_url(reverse('password_reset')),
+        )
+
+        await page.wait_for_selector(
+            '#lona dialog[open] h3:has-text("Password Reset")',
+        )
+
+        await page.screenshot(
+            path='doc/screenshots/django-password-reset.png',
+        )
+
+        # logout
+        logout_url = test_django_project.make_url(reverse('logout'))
+
+        await page.goto(logout_url)
+        await page.wait_for_url(logout_url)
+
+        await page.screenshot(path='doc/screenshots/django-logout.png')

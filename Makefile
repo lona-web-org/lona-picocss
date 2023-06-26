@@ -2,7 +2,11 @@ SHELL=/bin/bash
 PYTHON=python3
 PYTHON_ENV=env
 
-.PHONY: all clean npm-dependencies dist _release test-script test-project
+DJANGO_SETTINGS_MODULE=test_django_project._django.settings
+DJANGO_DATABASE_NAME=test-django-project/db.sqlite3
+
+.PHONY: all clean npm-dependencies dist _release \
+	test-script test-project test-django-project
 
 
 all: | test-script
@@ -17,7 +21,8 @@ $(PYTHON_ENV): pyproject.toml
 	$(PYTHON) -m venv $(PYTHON_ENV) && \
 	. $(PYTHON_ENV)/bin/activate && \
 	pip install pip --upgrade && \
-	pip install -e .[dev,packaging]
+	pip install -e .[packaging,test] \
+	pip install -e test-django-project
 
 # npm #########################################################################
 node_modules: package.json
@@ -61,5 +66,22 @@ test-project: | $(PYTHON_VENV)
 	. $(PYTHON_ENV)/bin/activate && \
 	lona run-server \
 		--project-root=test-project \
+		-s settings.py \
+		$(args)
+
+# django
+smtp-server: $(PYTHON_ENV)
+	. $(PYTHON_ENV)/bin/activate && \
+	python -m smtpd -c DebuggingServer -n localhost:1025
+
+$(DJANGO_DATABASE_NAME): | $(PYTHON_ENV)
+	. $(PYTHON_ENV)/bin/activate && \
+	DJANGO_SETTINGS_MODULE=$(DJANGO_SETTINGS_MODULE) django-admin migrate && \
+	DJANGO_SETTINGS_MODULE=$(DJANGO_SETTINGS_MODULE) django-admin createsuperuser
+
+test-django-project: | $(PYTHON_ENV) $(DJANGO_DATABASE_NAME)
+	. $(PYTHON_ENV)/bin/activate && \
+	lona run-server \
+		--project-root=test-django-project \
 		-s settings.py \
 		$(args)

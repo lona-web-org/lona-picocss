@@ -85,3 +85,49 @@ def get_debug_navigation(server, request):
             ],
         ),
     ]
+
+
+def get_django_auth_navigation(server, request):
+    from django.urls import reverse
+
+    nav_items = []
+
+    # user urls
+    if request.user.is_authenticated:
+        sub_nav_items = [
+            NavItem(
+                title='Change Password',
+                url=reverse('password_change'),
+            ),
+            NavItem(
+                title='Logout',
+                url=reverse('logout'),
+            ),
+        ]
+
+        if request.user.is_staff:
+            sub_nav_items.append(
+                NavItem(
+                    title='Django Admin',
+                    url=reverse('admin:index'),
+                ),
+            )
+
+        nav_items.append(
+            NavItem(
+                title=request.user.get_username(),
+                icon='user',
+                nav_items=sub_nav_items,
+            ),
+        )
+
+    # login url
+    else:
+        nav_items.append(
+            NavItem(
+                title='Login',
+                url=reverse('login'),
+            ),
+        )
+
+    return nav_items

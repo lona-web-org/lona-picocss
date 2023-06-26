@@ -1,0 +1,56 @@
+{% extends "picocss/django/base.html" %}
+
+{% block title %}{{ theme_data.theme_settings.brand }} - Login{% endblock %}
+
+{% block content %}
+    <form class="auth-form" method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+
+        <dialog open>
+            <article>
+                <a href="/" class="close" aria-label="Close"></a>
+
+                <h3>Login</h3>
+
+                {% if form.errors %}
+                    <p class="error">
+                        Your username and password didn't match.
+                        Please try again.
+                    </p>
+                {% endif %}
+
+                {% if next %}
+                    {% if user.is_authenticated %}
+                        <p>
+                            Your account doesn't have access to this page.
+                            To proceed, please login with an account that
+                            has access.
+                        </p>
+                    {% else %}
+                        <p>Please login to see this page.</p>
+                    {% endif %}
+                {% endif %}
+
+                <label>
+                    {{ form.username.label_tag }}
+                    {{ form.username }}
+                </label>
+
+                <label>
+                    {{ form.password.label_tag }}
+                    {{ form.password }}
+                </label>
+
+                <p>
+                    <a href="{% url 'password_reset' %}">Reset Password</a>
+                </p>
+
+                <input type="hidden" name="next" value="{{ next }}">
+
+                <footer>
+                    <input type="submit" value="Login">
+                </footer>
+            </article>
+        </dialog>
+    </form>
+{% endblock %}

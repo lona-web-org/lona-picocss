@@ -1,0 +1,59 @@
+{% load lona_picocss_filter %}
+{% get_theme_data %}
+<!doctype html>
+<html data-theme="{{ theme_data.theme_settings.theme }}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %}{% endblock %}</title>
+
+        {% if theme_data.theme_settings.theme == 'dark' %}
+            <meta name="theme-color" content="#11191F">
+        {% elif theme_data.theme_settings.theme == 'light' %}
+            <meta name="theme-color" content="#FFFFFF">
+        {% endif %}
+
+        {% for url in theme_data.stylesheet_urls %}
+            <link href="{{ url }}" rel="stylesheet">
+        {% endfor %}
+
+        <style>
+          {{ theme_data.css_string|safe }}
+        </style>
+    </head>
+    <body{% if theme_data.theme_settings.fluid %} class="fluid"{% endif %}>
+        <div
+            data-theme="generated"
+            {% if theme_data.theme_settings.page_width and not theme_data.theme_settings.fluid %} style="max-width: {{ theme_data.theme_settings.page_width }}" {% endif %}
+            {% if not theme_data.theme_settings.fluid %} class="container"{% endif %}>
+
+            {% if theme_data.theme_settings.header %}
+                <header id="lona-header">
+                    {% include "picocss/header.html" %}
+                </header>
+            {% endif %}
+
+            <main id="lona">
+              {% block content %}{% endblock %}
+            </main>
+
+            {% if theme_data.theme_settings.footer %}
+                <footer id="lona-footer">
+                    {% include "picocss/footer.html" %}
+                </footer>
+            {% endif %}
+        </div>
+
+        {% for url in theme_data.script_urls %}
+            <script src="{{ url }}"></script>
+        {% endfor %}
+
+        <script>
+            window.addEventListener('load', () => {
+
+                // icons
+                feather.replace();
+            });
+        </script>
+    </body>
+</html>

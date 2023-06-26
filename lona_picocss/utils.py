@@ -15,3 +15,7 @@ def exception_to_html(exception):
         )
 
     return html.escape(''.join(lines))
+
+
+def get_django_show_exceptions(server, request):
+    return request.user.is_staff
