@@ -52,6 +52,13 @@ class SettingsView(View):
 
     def reset(self, input_event):
         settings.reset()
+        settings.load_lona_settings()
+        settings.render_theme()
+
+        return self.refresh()
+
+    def reset_to_defaults(self, input_event):
+        settings.reset()
         settings.render_theme()
 
         return self.refresh()
@@ -78,6 +85,11 @@ class SettingsView(View):
                             'Reset',
                             secondary=True,
                             handle_click=self.reset,
+                        ),
+                        Button(
+                            'Reset to defaults',
+                            secondary=True,
+                            handle_click=self.reset_to_defaults,
                         ),
                         Button(
                             'Apply',
