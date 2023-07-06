@@ -1,6 +1,5 @@
-{% set get_theme_data = Lona.import('lona_picocss.themes.get_theme_data') %}
-{% set hex_to_rgba = Lona.import('lona_picocss.themes.hex_to_rgba') %}
-{% set theme_data = get_theme_data(Lona) %}
+{% set get_theme_data = Lona.import('lona_picocss.settings.get_theme_data') %}
+{% set theme_data = get_theme_data(request) %}
 <!doctype html>
 <html data-theme="{{ theme_data.theme_settings.theme }}">
     <head>
@@ -15,7 +14,7 @@
 
         {{ Lona.load_stylesheets() }}
         <style>
-            {% include "picocss/color-scheme.css" %}
+          {{ theme_data.css_string }}
         </style>
     </head>
     <body{% if theme_data.theme_settings.fluid %} class="fluid"{% endif %}>
@@ -50,7 +49,7 @@
 
                 const lona_context = new Lona.LonaContext({
                     target: 'main#lona',
-                    title: '{{ theme_data.theme_settings.title }}',
+                    title: '{{ theme_data.theme_settings.brand }}',
                     update_address_bar: true,
                     update_title: true,
                     follow_redirects: true,
@@ -99,8 +98,9 @@
                     }
 
                     setTimeout(() => {
-                        lona_context.reconnect();
-
+                        lona_context.reconnect({
+                            create_window: false,
+                        });
                     }, 1000);
                 });
 

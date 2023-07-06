@@ -1,0 +1,14 @@
+{% extends "picocss/django/base.html" %}
+
+{% load lona_picocss_filter %}
+{% get_theme_data %}
+
+{% block title %}{{ theme_data.theme_settings.brand }} - 500 Internal Error{% endblock %}
+
+{% block content %}
+    <h1>Error 500</h1>
+    <p>Internal Error</p>
+    {% if theme_data.show_exceptions %}
+        <pre>{{ exception|exception_to_html }}</pre>
+    {% endif %}
+{% endblock %}

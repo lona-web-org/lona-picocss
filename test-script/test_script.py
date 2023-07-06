@@ -1,9 +1,8 @@
-from lona.html import HTML, Button, Div, H1
-from lona import LonaApp, LonaView
+from lona import App
 
 from lona_picocss import install_picocss
 
-app = LonaApp(__file__)
+app = App(__file__)
 
 install_picocss(app, debug=True)
 

@@ -23,3 +23,4 @@ pip install lona lona-picocss
  - [Getting Started](doc/getting-started.md)
  - [Customization](doc/customization.md)
  - [Components](doc/components.md)
+ - [Django Support](doc/django.md)

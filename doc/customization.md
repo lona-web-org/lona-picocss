@@ -7,20 +7,51 @@ The configurator applies all changes live. After you are done, copy all settings
 ![](../doc/screenshots/settings.png)
 
 
-## Menu
+## Navigation
 
-The default template of lona-picocss has support for a menu at the top. To configure its contents set `settings.PICOCSS_MENU`, like in this example.
-When `app.settings.PICOCSS_MENU` is set to an empty list, the menu does not get rendered.
+The default template of lona-picocss has support for a menu at the top. To configure its contents set `settings.PICOCSS_NAVIGATION`, like in the examples.
+When `app.settings.PICOCSS_NAVIGATION` is or returns an empty list, the menu does not get rendered.
+
+### Static Navigation
 
 ```python
-app.settings.PICOCSS_MENU = [
-    ['Simple Link', '/home'],
-    ['Dropdown', [
-        ['Dropdown Link 1', '/dropdown/link-1/'],
-        ['Dropdown Link 1', '/dropdown/link-1/'],
-    ]],
-    ['Reverse URL', '!picocss__settings'],
+app.settings.PICOCSS_NAVIGATION = [
+    NavItem(
+        title='Simple Link',
+        url='/home',
+    ),
+
+    NavItem(
+        title='Dropdown'
+        nav_items=[
+            NavItem(
+                title='Dropdown Link 1'
+                url='/dropdown/link-1/',
+            ),
+            NavItem(
+                title='Dropdown Link 2'
+                url='/dropdown/link-2/',
+            ),
+        ]
+    ),
 ]
+```
+
+### Dynamic Navigation
+
+```python
+from lona_picocss import NavItem
+
+def get_navigation(server, reqest):
+    return [
+        NavItem(
+            title='Settings',
+            url=server.reverse('picocss__settings'),
+            icon='settings',
+        ),
+    ]
+
+app.settings.PICOCSS_NAVIGATION = get_navigation
 ```
 
 

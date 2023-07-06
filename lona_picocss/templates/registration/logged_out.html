@@ -1,0 +1,10 @@
+{% extends "picocss/django/base.html" %}
+
+{% block title %}{{ theme_data.theme_settings.brand }} - Logged Out{% endblock %}
+
+{% block content %}
+    <h1>Logged Out</h1>
+    <p>
+        <a href="{% url 'login' %}" role="button">Login</a>
+    </p>
+{% endblock %}

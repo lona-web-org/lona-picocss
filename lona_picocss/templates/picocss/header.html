@@ -1,22 +1,25 @@
-{% set resolve_url = Lona.import('lona_picocss.themes.resolve_url') %}
 <nav>
     <ul>
-        <li><a href="/" id="brand">{% if theme_data.theme_settings.logo %}<img src="{{ Lona.load_static_file(theme_data.theme_settings.logo) }}"> {% endif %}{% if theme_data.theme_settings.brand %}<strong>{{ theme_data.theme_settings.brand }}</strong>{% endif %}</a></li>
+        <li><a href="/" id="brand">{% if theme_data.logo_path %}<img src="{{ theme_data.logo_path }}"> {% endif %}{% if theme_data.theme_settings.brand %}<strong>{{ theme_data.theme_settings.brand }}</strong>{% endif %}</a></li>
     </ul>
     <ul>
-        {% for label, target in theme_data.menu %}
-            {% if isinstance(target, str) %}
-                <li><a href="{{ resolve_url(Lona, target) }}">{{ label }}</a></li>
-            {% elif isinstance(target, list) %}
+        {% for nav_item in theme_data.navigation %}
+            {% if nav_item.nav_items %}
                 <li>
                     <details role="list" dir="rtl">
-                        <summary aria-haspopup="listbox" role="link">{{ label }}</summary>
+                        <summary aria-haspopup="listbox" role="link">{% if nav_item.icon %}<i data-feather="{{ nav_item.icon }}"></i>{% endif %}{{ nav_item.title }}</summary>
                         <ul role="listbox">
-                            {% for sub_label, sub_target in target %}
-                                <li><a href="{{ resolve_url(Lona, sub_target) }}">{{ sub_label }}</a></li>
+                            {% for sub_nav_item in nav_item.nav_items %}
+                                <li>
+                                  <a href="{{ sub_nav_item.url }}">{% if sub_nav_item.icon %}<i data-feather="{{ sub_nav_item.icon }}"></i>{% endif %}{{ sub_nav_item.title }}</a>
+                                </li>
                             {% endfor %}
                         </ul>
                     </details>
+                </li>
+            {% else %}
+                <li>
+                  <a href="{{ nav_item.url }}">{% if nav_item.icon %}<i data-feather="{{ nav_item.icon }}"></i>{% endif %}{{ nav_item.title }}</a>
                 </li>
             {% endif %}
         {% endfor %}

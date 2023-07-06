@@ -1,0 +1,10 @@
+{% set get_theme_data = Lona.import('lona_picocss.settings.get_theme_data') %}
+{% set exception_to_html = Lona.import('lona_picocss.utils.exception_to_html') %}
+{% set theme_data = get_theme_data(request) %}
+<h1>Error 500</h1>
+
+<p>Internal Error</p>
+
+{% if theme_data.show_exceptions %}
+    <pre>{{ exception_to_html(exception) }}</pre>
+{% endif %}

@@ -38,18 +38,28 @@ class SettingsView(View):
 
     def handle_change(self, input_event):
         name = input_event.node.state['name']
+        value = input_event.node.value
 
-        setattr(self.server.settings, name, input_event.node.value)
+        settings.set(name, value)
+        settings.render_theme()
 
         return self.refresh()
 
-
     def apply(self, input_event):
+        settings.render_theme()
+
         return self.refresh()
 
     def reset(self, input_event):
-        for key, value in settings.DEFAULTS.items():
-            setattr(self.server.settings, key, value)
+        settings.reset()
+        settings.load_lona_settings()
+        settings.render_theme()
+
+        return self.refresh()
+
+    def reset_to_defaults(self, input_event):
+        settings.reset()
+        settings.render_theme()
 
         return self.refresh()
 
@@ -75,6 +85,11 @@ class SettingsView(View):
                             'Reset',
                             secondary=True,
                             handle_click=self.reset,
+                        ),
+                        Button(
+                            'Reset to defaults',
+                            secondary=True,
+                            handle_click=self.reset_to_defaults,
                         ),
                         Button(
                             'Apply',
@@ -110,19 +125,23 @@ class SettingsView(View):
         settings_pre = html.query_selector('pre')
         settings_form = html[2][0]
 
-        for index, name in enumerate(settings.SETTINGS.keys()):
+        for index, name in enumerate(settings.get_names()):
             slug = name[len('PICOCSS_'):].replace('_', '-').lower()
             verbose_name = name[len('PICOCSS_'):].replace('_', ' ').title()
-            default = settings.DEFAULTS[name]
-            values = settings.SETTINGS[name]
-            value = self.server.settings.get(name, default)
+            value = settings.get(name)
+            values = settings.get_default(name, value)
 
-            # object values
-            if name in settings.OBJECT_SETTINGS:
+            # unsupported settings
+            if name in ('PICOCSS_NAVIGATION', ):
                 continue
 
+            # show exceptions
+            if name == 'PICOCSS_SHOW_EXCEPTIONS':
+                if callable(value):
+                    value = True
+
             # string values
-            elif isinstance(values, str):
+            if isinstance(values, str):
                 field = Label(
                     verbose_name,
                     TextInput(
@@ -176,7 +195,12 @@ class SettingsView(View):
                 settings_form.append(Br())
 
             # add config variable to compiled output
-            if value != settings.DEFAULTS[name]:
+            default = settings.get_default(name)
+
+            if isinstance(default, list) and len(default) > 0:
+                default = default[0]
+
+            if value != default:
                 settings_pre.write_line(
                     f'{settings_prefix}{name} = {repr(value)}',
                 )

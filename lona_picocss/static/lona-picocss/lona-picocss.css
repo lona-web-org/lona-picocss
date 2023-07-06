@@ -19,6 +19,24 @@ footer#lona-footer {
     min-height: 4em;
 }
 
+/* header (menu) ----------------------------------------------------------- */
+header#lona-header details {
+    direction: ltr;
+}
+
+header#lona-header a,
+header#lona-header summary {
+    display: flex;
+    gap: 0.3em;
+    align-items: center;
+}
+
+header#lona-header a svg,
+header#lona-header summary svg {
+    height: var(--font-size);
+    width: var(--font-size);
+}
+
 @media (max-width: 992px) {
     header#lona-header nav {
         display: block;
@@ -34,6 +52,20 @@ footer#lona-footer {
         margin-top: calc(var(--nav-element-spacing-horizontal) * 2);
         margin-bottom: calc(var(--nav-element-spacing-horizontal) * 2);
     }
+}
+
+/* auth -------------------------------------------------------------------- */
+.auth-form dialog article {
+    min-width: 30em;
+}
+
+.auth-form dialog footer a {
+    width: 100%;
+}
+
+.auth-form .error,
+.auth-form .errorlist {
+	color: red;
 }
 
 /* scroller ---------------------------------------------------------------- */
