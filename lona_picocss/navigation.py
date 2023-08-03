@@ -10,6 +10,11 @@ class NavItem:
     icon: str = ''
     nav_items: list[NavItem] = field(default_factory=list)
 
+@dataclass
+class NavDivider:
+    title: str = ''
+    icon: str = ''
+    divider: bool = True
 
 def get_debug_navigation(server, request):
     return [

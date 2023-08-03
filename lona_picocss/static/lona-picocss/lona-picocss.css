@@ -54,6 +54,10 @@ header#lona-header summary svg {
     }
 }
 
+li[role=divider] {
+    background-color: var(--form-element-disabled-background-color);
+}
+
 /* auth -------------------------------------------------------------------- */
 .auth-form dialog article {
     min-width: 30em;

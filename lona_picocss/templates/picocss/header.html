@@ -10,8 +10,12 @@
                         <summary aria-haspopup="listbox" role="link">{% if nav_item.icon %}<i data-feather="{{ nav_item.icon }}"></i>{% endif %}{{ nav_item.title }}</summary>
                         <ul role="listbox">
                             {% for sub_nav_item in nav_item.nav_items %}
-                                <li>
-                                  <a href="{{ sub_nav_item.url }}">{% if sub_nav_item.icon %}<i data-feather="{{ sub_nav_item.icon }}"></i>{% endif %}{{ sub_nav_item.title }}</a>
+                                <li{% if sub_nav_item.divider %} role="divider"{% endif %}>
+                                    {% if sub_nav_item.divider %}
+                                        {% if sub_nav_item.icon %}<i data-feather="{{ sub_nav_item.icon }}"></i>{% endif %}{{ sub_nav_item.title }}
+                                     {% else %}
+                                        <a href="{{ sub_nav_item.url }}">{% if sub_nav_item.icon %}<i data-feather="{{ sub_nav_item.icon }}"></i>{% endif %}{{ sub_nav_item.title }}</a>
+                                     {% endif %}
                                 </li>
                             {% endfor %}
                         </ul>
