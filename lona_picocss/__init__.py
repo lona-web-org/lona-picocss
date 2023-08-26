@@ -21,9 +21,8 @@ VERSION_STRING = '.'.join(str(i) for i in VERSION)
 
 
 def install_picocss(app, debug=False):
-    settings.set('PICOCSS_DEBUG', debug)
-
     app.settings.PICOCSS_LONA_PROJECT_TYPE = 'app'
+    app.settings.PICOCSS_DEBUG = debug
 
     # feature flags
     app.settings.CLIENT_VERSION = 2
