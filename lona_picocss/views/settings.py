@@ -29,7 +29,7 @@ from lona_picocss.html import (
 
 
 class SettingsView(View):
-    SPACER = [4, 11, 15, 18, 22, 24, 26, 28, 30]
+    SPACER = [4, 10, 14, 17, 29]
 
     def refresh(self):
         return {
@@ -125,15 +125,19 @@ class SettingsView(View):
         settings_pre = html.query_selector('pre')
         settings_form = html[2][0]
 
-        for index, name in enumerate(settings.get_names()):
+        index = -1
+
+        for name in settings.get_names():
             slug = name[len('PICOCSS_'):].replace('_', '-').lower()
             verbose_name = name[len('PICOCSS_'):].replace('_', ' ').title()
             value = settings.get(name)
             values = settings.get_default(name, value)
 
             # unsupported settings
-            if name in ('PICOCSS_NAVIGATION', ):
+            if name in ('PICOCSS_DEBUG', 'PICOCSS_NAVIGATION', ):
                 continue
+
+            index += 1
 
             # show exceptions
             if name == 'PICOCSS_SHOW_EXCEPTIONS':

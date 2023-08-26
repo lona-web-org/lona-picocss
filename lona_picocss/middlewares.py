@@ -15,6 +15,9 @@ class LonaPicocssMiddleware:
         settings.load_lona_settings()
         settings.render_theme()
 
+        if settings.get('PICOCSS_DEBUG'):
+            logger.warning('running in debug mode')
+
 
 class DjangoCollectStaticMiddleware:
     # TODO: move to lona-django

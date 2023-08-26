@@ -1,5 +1,3 @@
-import logging
-
 from lona_picocss.routes import IT_WORKS_ROUTE, SETTINGS_ROUTE, DEMO_ROUTES
 from lona_picocss.middlewares import LonaPicocssMiddleware
 from lona_picocss.utils import get_django_show_exceptions  # NOQA
@@ -21,10 +19,10 @@ from lona_picocss.views.error_views import (
 VERSION = (0, 4, 1)
 VERSION_STRING = '.'.join(str(i) for i in VERSION)
 
-logger = logging.getLogger('lona-picocss')
-
 
 def install_picocss(app, debug=False):
+    settings.set('PICOCSS_DEBUG', debug)
+
     app.settings.PICOCSS_LONA_PROJECT_TYPE = 'app'
 
     # feature flags
@@ -39,15 +37,6 @@ def install_picocss(app, debug=False):
     app.settings.ERROR_500_VIEW = Error500View
 
     # setup middlewares
-    @app.middleware
-    class PicocssDebugWarningMiddleware:
-        async def on_startup(self, data):
-            # this has do be done using a middleware, so the warning gets
-            # logged after the logging is fully setup (color, format, etc)
-
-            if debug:
-                logger.warning('running in debug mode')
-
     app.middleware(LonaPicocssMiddleware)
 
     # setup views

@@ -7,6 +7,7 @@ STATIC_DIR = os.path.join(os.path.dirname(__file__), 'static')
 FRONTEND_TEMPLATE = 'picocss/base.html'
 
 SETTINGS_DEFAULTS = {
+    'PICOCSS_DEBUG': False,
     'PICOCSS_BRAND': 'Lona',
     'PICOCSS_LOGO': 'lona-picocss/logo.svg',
     'PICOCSS_TITLE': 'Lona',
