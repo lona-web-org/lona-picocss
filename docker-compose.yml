@@ -1,9 +1,5 @@
 version: "3"
 
-networks:
-    net:
-        driver: bridge
-
 services:
     playwright:
         user: 1000:1000
@@ -15,9 +11,6 @@ services:
                 - UID=${UID:-1000}
                 - GID=${GID:-1000}
 
-        networks:
-            - net
-
         volumes:
             - ./:/app
 
@@ -26,4 +19,3 @@ services:
 
         working_dir: "/app"
         command: "tox"
-        command: "bash"
