@@ -42,6 +42,10 @@ header#lona-header summary svg {
         display: block;
     }
 
+    header#lona-header nav ul {
+        margin-left: 0;
+    }
+
     header#lona-header nav > ul > li {
         padding-top: calc(var(--nav-element-spacing-vertical) / 2);
         padding-left: 0;
@@ -55,8 +59,10 @@ header#lona-header summary svg {
 }
 
 /* auth -------------------------------------------------------------------- */
-.auth-form dialog article {
-    min-width: 30em;
+@media (min-width: 767px) {
+    .auth-form dialog article {
+        min-width: 30em;
+    }
 }
 
 .auth-form dialog footer a {
