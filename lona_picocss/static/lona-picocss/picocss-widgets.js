@@ -37,6 +37,16 @@ class LonaPicocssModalWidget {
         return scrollbarWidth;
     }
 
+    resetDdocument() {
+        document.documentElement.classList.remove(
+            this.closingClass,
+            this.openClass,
+            this.visibleClass,
+        );
+
+        document.documentElement.style.removeProperty('--scrollbar-width');
+    }
+
     open() {
         const scrollbarIsVisible = document.body.scrollHeight > screen.height;
 
@@ -64,13 +74,7 @@ class LonaPicocssModalWidget {
         document.documentElement.classList.add(this.closingClass);
 
         setTimeout(() => {
-            document.documentElement.classList.remove(
-                this.closingClass,
-                this.openClass,
-                this.visibleClass,
-            );
-
-            document.documentElement.style.removeProperty('--scrollbar-width');
+            this.resetDdocument();
             this.root_node.removeAttribute('open');
         }, this.animationDuration);
     }
@@ -93,6 +97,10 @@ class LonaPicocssModalWidget {
 
     data_updated() {
         this.updateOpenState();
+    }
+
+    destroy() {
+        this.resetDdocument();
     }
 }
 
