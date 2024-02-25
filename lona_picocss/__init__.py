@@ -7,6 +7,7 @@ from lona_picocss.navigation import (  # NOQA
     get_django_auth_navigation,
     get_debug_navigation,
     NavItem,
+    NavDivider,
 )
 
 from lona_picocss.views.error_views import (
