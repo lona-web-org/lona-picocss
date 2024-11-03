@@ -16,7 +16,7 @@ from lona_picocss.views.error_views import (
 )
 
 
-VERSION = (0, 4, 3)
+VERSION = (0, 4, 4)
 VERSION_STRING = '.'.join(str(i) for i in VERSION)
 
 
