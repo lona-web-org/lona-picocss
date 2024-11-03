@@ -55,8 +55,10 @@ header#lona-header summary svg {
 }
 
 /* auth -------------------------------------------------------------------- */
-.auth-form dialog article {
-    min-width: 30em;
+@media (min-width: 767px) {
+    .auth-form dialog article {
+        min-width: 30em;
+    }
 }
 
 .auth-form dialog footer a {
